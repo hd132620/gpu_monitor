@@ -1,0 +1,40 @@
+/* static/style.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  padding: 20px;
+  margin: 80px auto 0 auto; /* 요소를 수평으로 가운데 정렬하고, 상단에 여백 추가 */
+  text-align: center; /* 그래프를 가운데 정렬하기 위해 추가 */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  max-width: 600px;
+  max-height: 300px;
+  margin: 0 auto; /* 그래프를 가운데 정렬하기 위해 추가 */
+  display: block; /* 블록 요소로 설정하여 가운데 정렬 속성이 적용되도록 함 */
+}

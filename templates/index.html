@@ -2,139 +2,137 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>System Information</title>
+    <title>HPC-G GPU Information</title>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        canvas {
-            max-width: 600px;
-            max-height: 300px;
-        }
-    </style>
+    <!-- CSS Style -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>System Information</h1>
-    
-    <!-- GPU Information -->
-    <h2>GPU Information</h2>
-    <table border="1">
-        <tr>
-            <th>GPU Index</th>
-            <th>Utilization (%)</th>
-            <th>Memory Used (MB)</th>
-            <th>Memory Total (MB)</th>
-        </tr>
-        {% for gpu in gpu_info %}
-        <tr>
-            <td>{{ gpu.index }}</td>
-            <td>{{ gpu.utilization }}</td>
-            <td>{{ gpu.memory_used }}</td>
-            <td>{{ gpu.memory_total }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <!-- GPU Utilization Chart -->
-    <h2>GPU Utilization</h2>
-    <canvas id="gpuUtilizationChart"></canvas>
-
-    <!-- GPU Memory Usage Chart -->
-    <h2>GPU Memory Usage</h2>
-    <canvas id="gpuMemoryUsageChart"></canvas>
-
-    <!-- CPU Usage -->
-    <h2>CPU Usage</h2>
-    <p>CPU Usage: {{ cpu_usage }}%</p>
-
-    <!-- System Update Time -->
-    <h2>System Update Time</h2>
-    <p>Last Update: {{ current_time }}</p>
-
-    <script>
-        // Function to create GPU Utilization Chart
-        function createGPUUtilizationChart() {
-            var labels = [];
-            var utilization = [];
+    <div class="container">
+        <h1>HPC-G GPU Information</h1>
+        
+        <!-- GPU Information -->
+        <h2>GPU Information</h2>
+        <table border="1">
+            <tr>
+                <th>GPU Index</th>
+                <th>Utilization (%)</th>
+                <th>Memory Used (MB)</th>
+                <th>Memory Total (MB)</th>
+            </tr>
             {% for gpu in gpu_info %}
-            labels.push("GPU {{ gpu.index }}");
-            utilization.push({{ gpu.utilization }});
+            <tr>
+                <td>{{ gpu.index }}</td>
+                <td>{{ gpu.utilization }}</td>
+                <td>{{ gpu.memory_used }}</td>
+                <td>{{ gpu.memory_total }}</td>
+            </tr>
             {% endfor %}
+        </table>
 
-            var ctx = document.getElementById('gpuUtilizationChart').getContext('2d');
-            var gpuUtilizationChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Utilization (%)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1,
-                        data: utilization
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            min: 0,
-                            max: 100,
-                        },
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                max: 100
-                            }
+        <!-- GPU Utilization Chart -->
+        <h2>GPU Utilization</h2>
+        <canvas id="gpuUtilizationChart"></canvas>
+
+        <!-- GPU Memory Usage Chart -->
+        <h2>GPU Memory Usage</h2>
+        <canvas id="gpuMemoryUsageChart"></canvas>
+
+        <!-- CPU Usage -->
+        <h2>CPU Usage</h2>
+        <p>CPU Usage: {{ cpu_usage }}%</p>
+
+        <!-- System Update Time -->
+        <h2>System Update Time</h2>
+        <p>Last Update: {{ current_time }}</p>
+
+        <script>
+            // Function to create GPU Utilization Chart
+            function createGPUUtilizationChart() {
+                var labels = [];
+                var utilization = [];
+                {% for gpu in gpu_info %}
+                labels.push("GPU {{ gpu.index }}");
+                utilization.push({{ gpu.utilization }});
+                {% endfor %}
+
+                var ctx = document.getElementById('gpuUtilizationChart').getContext('2d');
+                var gpuUtilizationChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Utilization (%)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1,
+                            data: utilization
                         }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                min: 0,
+                                max: 100,
+                            },
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    max: 100
+                                }
+                            }]
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
 
-        // Function to create GPU Memory Usage Chart
-        function createGPUMemoryUsageChart() {
-            var labels = [];
-            var memoryUsed = [];
-            var memoryTotal = [];
-            {% for gpu in gpu_info %}
-            labels.push("GPU {{ gpu.index }}");
-            memoryUsed.push({{ gpu.memory_used }});
-            memoryTotal.push({{ gpu.memory_total }});
-            {% endfor %}
+            // Function to create GPU Memory Usage Chart
+            function createGPUMemoryUsageChart() {
+                var labels = [];
+                var memoryUsed = [];
+                var memoryTotal = [];
+                {% for gpu in gpu_info %}
+                labels.push("GPU {{ gpu.index }}");
+                memoryUsed.push({{ gpu.memory_used }});
+                memoryTotal.push({{ gpu.memory_total }});
+                {% endfor %}
 
-            var ctx = document.getElementById('gpuMemoryUsageChart').getContext('2d');
-            var gpuMemoryUsageChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Memory Used (MB)',
-                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1,
-                        data: memoryUsed
-                    }, {
-                        label: 'Memory Total (MB)',
-                        backgroundColor: 'rgba(255, 206, 86, 0.5)',
-                        borderColor: 'rgba(255, 206, 86, 1)',
-                        borderWidth: 1,
-                        data: memoryTotal
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
+                var ctx = document.getElementById('gpuMemoryUsageChart').getContext('2d');
+                var gpuMemoryUsageChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Memory Used (MB)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            data: memoryUsed
+                        }, {
+                            label: 'Memory Total (MB)',
+                            backgroundColor: 'rgba(255, 206, 86, 0.5)',
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            borderWidth: 1,
+                            data: memoryTotal
                         }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
 
-        // Call the functions to create charts
-        createGPUUtilizationChart();
-        createGPUMemoryUsageChart();
-    </script>
+            // Call the functions to create charts
+            createGPUUtilizationChart();
+            createGPUMemoryUsageChart();
+        </script>
+    </div>
 </body>
 </html>
