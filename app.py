@@ -1,7 +1,10 @@
+from datetime import datetime
 from flask import Flask, render_template
+from pytz import timezone
+
 import pynvml
 import psutil
-import time
+
 
 app = Flask(__name__)
 
@@ -32,7 +35,7 @@ def get_cpu_usage():
 
 # Function to get current time
 def get_current_time():
-    return time.strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.now(timezone("Asia/Seoul")).strftime('%Y-%m-%d %H:%M:%S')
 
 # Route to render HTML template with system information
 @app.route('/')
