@@ -7,7 +7,7 @@ body {
 .container {
   max-width: 1200px; /* 컨테이너 최대 너비 확장 */
   padding: 20px;
-  margin: 80px auto 0 auto; /* 요소를 수평으로 가운데 정렬하고, 상단에 여백 추가 */
+  margin: auto auto 0 auto; /* 요소를 수평으로 가운데 정렬하고, 상단에 여백 추가 */
   text-align: center; /* 그래프를 가운데 정렬하기 위해 추가 */
 }
 
