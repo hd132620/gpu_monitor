@@ -1,4 +1,3 @@
-/* static/style.css */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -6,14 +5,19 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1200px; /* 컨테이너 최대 너비 확장 */
   padding: 20px;
   margin: 80px auto 0 auto; /* 요소를 수평으로 가운데 정렬하고, 상단에 여백 추가 */
   text-align: center; /* 그래프를 가운데 정렬하기 위해 추가 */
 }
 
+.table-container {
+  display: flex;
+  justify-content: center;
+}
+  
 table {
-  width: 100%;
+  width: 60%;
   border-collapse: collapse;
 }
 
@@ -23,17 +27,31 @@ table, th, td {
 
 th, td {
   padding: 8px;
-  text-align: left;
+  text-align: center;
 }
 
 th {
   background-color: #f2f2f2;
 }
 
+td:nth-child(n+3) {
+  text-align: right;
+}
+
+.charts-container {
+  display: flex; /* Flexbox 사용 */
+  justify-content: space-around; /* 차트들을 가로로 정렬 */
+  margin-top: 20px;
+}
+
+.chart {
+  width: 45%; /* 각 차트가 차지하는 너비 */
+}
+
 canvas {
-  width: 100%;
+  width: 100%; /* 캔버스 너비를 부모 요소의 너비에 맞춤 */
   height: auto;
-  max-width: 600px;
+  max-width: none; /* 최대 너비 제한 제거 */
   max-height: 300px;
   margin: 0 auto; /* 그래프를 가운데 정렬하기 위해 추가 */
   display: block; /* 블록 요소로 설정하여 가운데 정렬 속성이 적용되도록 함 */

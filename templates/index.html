@@ -14,30 +14,39 @@
         
         <!-- GPU Information -->
         <h2>GPU Information</h2>
-        <table border="1">
-            <tr>
-                <th>GPU Index</th>
-                <th>Utilization (%)</th>
-                <th>Memory Used (MB)</th>
-                <th>Memory Total (MB)</th>
-            </tr>
-            {% for gpu in gpu_info %}
-            <tr>
-                <td>{{ gpu.index }}</td>
-                <td>{{ gpu.utilization }}</td>
-                <td>{{ gpu.memory_used }}</td>
-                <td>{{ gpu.memory_total }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+        <div class="table-container">
+            <table border="1">
+                <tr>
+                    <th>GPU Index</th>
+                    <th>Utilization (%)</th>
+                    <th>Memory Used (MB)</th>
+                    <th>Memory Total (MB)</th>
+                </tr>
+                {% for gpu in gpu_info %}
+                <tr>
+                    <td>{{ gpu.index }}</td>
+                    <td>{{ gpu.utilization }}</td>
+                    <td>{{ gpu.memory_used }}</td>
+                    <td>{{ gpu.memory_total }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
 
-        <!-- GPU Utilization Chart -->
-        <h2>GPU Utilization</h2>
-        <canvas id="gpuUtilizationChart"></canvas>
+        <!-- Charts Container -->
+        <div class="charts-container">
+            <!-- GPU Utilization Chart -->
+            <div class="chart">
+                <h2>GPU Utilization</h2>
+                <canvas id="gpuUtilizationChart"></canvas>
+            </div>
 
-        <!-- GPU Memory Usage Chart -->
-        <h2>GPU Memory Usage</h2>
-        <canvas id="gpuMemoryUsageChart"></canvas>
+            <!-- GPU Memory Usage Chart -->
+            <div class="chart">
+                <h2>GPU Memory Usage</h2>
+                <canvas id="gpuMemoryUsageChart"></canvas>
+            </div>
+        </div>
 
         <!-- CPU Usage -->
         <h2>CPU Usage</h2>
@@ -76,12 +85,6 @@
                                 min: 0,
                                 max: 100,
                             },
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    max: 100
-                                }
-                            }]
                         }
                     }
                 });
@@ -119,11 +122,12 @@
                     },
                     options: {
                         scales: {
-                            yAxes: [{
+                            y: {
+                                display: true,
                                 ticks: {
                                     beginAtZero: true
                                 }
-                            }]
+                            }
                         }
                     }
                 });
